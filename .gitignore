@@ -1,0 +1,26 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build
+.next
+dist
+out
+.turbo
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# IDE / OS
+.idea
+.DS_Store
+*.log
+
+# Test
+coverage
+.nyc_output
+
+# Misc
+*.tsbuildinfo

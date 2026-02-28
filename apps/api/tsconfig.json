@@ -1,0 +1,9 @@
+{
+  "extends": "@recall/config/typescript",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "noEmit": false
+  },
+  "include": ["src/**/*"]
+}
