@@ -1,4 +1,4 @@
-import { JOB_STAGES } from "@recall/types";
+import { JOB_STAGES, type JobStage } from "@recall/types";
 import mongoose from "mongoose";
 import { Router } from "express";
 import { z } from "zod";
@@ -94,6 +94,44 @@ applicationsRouter.get("/", async (req, res) => {
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: "Failed to list applications" });
+  }
+});
+
+const reorderBodySchema = z.object({
+  stage: z.enum(JOB_STAGES as unknown as [string, ...string[]]),
+  applicationIds: z.array(z.string().min(1)).min(0),
+});
+
+/** Reorder applications within a stage. Sets stage and order for each id by index. */
+applicationsRouter.patch("/reorder", async (req, res) => {
+  const userId = await getCurrentUserId(req.auth?.sub, res);
+  if (!userId) return;
+
+  const parsed = reorderBodySchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(400).json({ error: "Validation failed", details: parsed.error.flatten() });
+  }
+
+  const { stage, applicationIds } = parsed.data;
+  const userObjectId = new mongoose.Types.ObjectId(userId);
+  const stageValue = stage as JobStage;
+
+  try {
+    const ids = applicationIds.filter((id) => mongoose.Types.ObjectId.isValid(id));
+    const bulkOps = ids.map((id, index) => ({
+      updateOne: {
+        filter: { _id: new mongoose.Types.ObjectId(id), userId: userObjectId },
+        update: { $set: { stage: stageValue, order: index } },
+      },
+    }));
+    if (bulkOps.length === 0) {
+      return res.json({ updated: 0 });
+    }
+    const result = await JobApplicationModel.bulkWrite(bulkOps);
+    return res.json({ updated: result.modifiedCount + result.upsertedCount });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to reorder applications" });
   }
 });
 
