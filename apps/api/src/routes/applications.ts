@@ -21,6 +21,7 @@ const createBodySchema = z.object({
   status: z.string().optional(),
   appliedDate: z.string().optional(),
   notes: z.string().optional(),
+  resumeId: z.string().optional(),
 });
 
 const updateBodySchema = z.object({
@@ -33,7 +34,7 @@ const updateBodySchema = z.object({
   status: z.string().optional(),
   appliedDate: z.string().optional(),
   notes: z.string().optional(),
-  resumeId: z.string().optional(),
+  resumeId: z.string().nullable().optional(),
   interviews: z.array(interviewSchema).optional(),
 });
 
@@ -186,6 +187,7 @@ applicationsRouter.post("/", async (req, res) => {
       status: data.status,
       appliedDate: data.appliedDate ? new Date(data.appliedDate) : undefined,
       notes: data.notes,
+      resumeId: data.resumeId,
       interviews: [],
     });
     res.status(201).json(toResponse(doc));

@@ -59,6 +59,7 @@ export interface JobApplicationCreate {
   status?: string;
   appliedDate?: string;
   notes?: string;
+  resumeId?: string;
 }
 
 export interface JobApplicationUpdate {
@@ -73,4 +74,11 @@ export interface JobApplicationUpdate {
   notes?: string;
   resumeId?: string;
   interviews?: Interview[];
+}
+
+export interface Resume {
+  id: string;
+  fileName: string;
+  size: number;
+  createdAt?: string;
 }
