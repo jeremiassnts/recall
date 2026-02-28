@@ -5,6 +5,7 @@ import helmet from "helmet";
 import { connectDb } from "./db.js";
 import { auth } from "./middleware/auth.js";
 import { applicationsRouter } from "./routes/applications.js";
+import { dashboardRouter } from "./routes/dashboard.js";
 import { resumesRouter } from "./routes/resumes.js";
 import { usersRouter } from "./routes/users.js";
 
@@ -26,6 +27,7 @@ app.get("/health", (_req, res) => {
 
 app.use("/api/users", auth, usersRouter);
 app.use("/api/applications", auth, applicationsRouter);
+app.use("/api/dashboard", auth, dashboardRouter);
 app.use("/api/resumes", auth, resumesRouter);
 
 async function start() {
@@ -35,7 +37,11 @@ async function start() {
   });
 }
 
-start().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (process.env.NODE_ENV !== "test") {
+  start().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
+export { app };

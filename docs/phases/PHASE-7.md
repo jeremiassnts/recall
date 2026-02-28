@@ -1,6 +1,6 @@
 # Phase 7 — Hardening + Testing
 
-**Status:** 🔲 Not yet implemented
+**Status:** ✅ Implemented (partial)
 
 ---
 
@@ -28,6 +28,19 @@ Harden security, reliability, and performance; add tests and any missing product
 - [ ] Docker builds for api and web; documented run instructions
 - [ ] CI pipeline (install, lint, typecheck, test, build, Docker); deploy to Coolify (or documented)
 - [ ] Phase 7 doc updated with “Implemented” section and file list
+
+---
+
+## Implemented
+
+- **Security:** Helmet, CORS, rate limiting (Phase 1). Zod on applications and resumes. Mongo ObjectId for queries. Resume: PDF magic bytes, 5MB limit.
+- **Backend tests:** `apps/api/jest.config.js`, `apps/api/src/__tests__/health.test.ts`; app exported when `NODE_ENV=test`; supertest + @types/supertest.
+- **Docker:** `apps/api/Dockerfile`, `apps/web/Dockerfile` (multi-stage). Web: Next `output: 'standalone'`.
+- **CI:** `.github/workflows/ci.yml` — pnpm install, lint, typecheck, test, build; Docker build for API and web.
+
+### Files added
+
+- `apps/api/jest.config.js` — `apps/api/src/__tests__/health.test.ts` — `apps/api/src/index.ts` (export app; skip start in test) — `apps/api/package.json` (supertest deps) — `apps/api/Dockerfile` — `apps/web/Dockerfile` — `apps/web/next.config.ts` (standalone) — `.github/workflows/ci.yml`
 
 ---
 

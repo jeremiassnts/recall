@@ -82,3 +82,14 @@ export interface Resume {
   size: number;
   createdAt?: string;
 }
+
+/** Dashboard analytics: pipeline metrics from aggregation. */
+export interface DashboardMetrics {
+  total: number;
+  active: number;
+  rejected: number;
+  offers: number;
+  byStage: { stage: JobStage; count: number }[];
+  /** Offer rate: offers / total (0 if total is 0). */
+  conversionRate: number;
+}
