@@ -1,6 +1,6 @@
 # Phase 4 — Calendar
 
-**Status:** 🔲 Not yet implemented
+**Status:** ✅ Implemented
 
 ---
 
@@ -21,12 +21,31 @@ Calendar view for interviews: monthly and weekly views, click event → job deta
 
 ## Completion criteria (to fill when implemented)
 
-- [ ] Calendar component (monthly and weekly)
-- [ ] Events sourced from job applications / interviews
-- [ ] Click event opens job detail (or side panel)
-- [ ] Dates stored in UTC; display with user timezone if needed
-- [ ] Optional: “Add to Google Calendar” for an event
-- [ ] Phase 4 doc updated with “Implemented” section and file list
+- [x] Calendar component (monthly and weekly)
+- [x] Events sourced from job applications / interviews
+- [x] Click event opens job detail (or side panel)
+- [x] Dates stored in UTC; display with user timezone if needed
+- [x] Optional: “Add to Google Calendar” for an event
+- [x] Phase 4 doc updated with “Implemented” section and file list
+
+---
+
+## Implemented
+
+- **Library:** `react-big-calendar` with `date-fns` localizer (month + week views).
+- **Events:** Built from each application’s `interviews` array and optional `appliedDate` (shown as "Applied: …").
+- **Click event:** Opens a detail modal with job summary, localised date/time, "Edit application" (opens existing ApplicationForm), and "Add to Google Calendar" (opens Google Calendar template URL in a new tab with UTC times).
+- **Timezone:** Event dates are parsed from ISO strings (UTC); calendar and date-fns display in the user’s local timezone.
+- **Nav:** Dashboard layout includes a "Calendar" link to `/dashboard/calendar`.
+
+### Files touched/added
+
+- `apps/web/package.json` — added `date-fns`, `react-big-calendar`, `@types/react-big-calendar`.
+- `apps/web/src/lib/calendarUtils.ts` — `applicationsToCalendarEvents`, `getGoogleCalendarUrl`, `CalendarEvent` type.
+- `apps/web/src/components/CalendarView.tsx` — calendar UI (month/week, event styling).
+- `apps/web/src/components/CalendarEventDetail.tsx` — job detail modal with "Edit" and "Add to Google Calendar".
+- `apps/web/src/app/dashboard/calendar/page.tsx` — calendar page (fetch applications, wire events and modals).
+- `apps/web/src/app/dashboard/layout.tsx` — added Calendar nav link.
 
 ---
 
