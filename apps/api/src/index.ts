@@ -4,6 +4,7 @@ import express from "express";
 import helmet from "helmet";
 import { connectDb } from "./db.js";
 import { auth } from "./middleware/auth.js";
+import { applicationsRouter } from "./routes/applications.js";
 import { usersRouter } from "./routes/users.js";
 
 const app = express();
@@ -23,6 +24,7 @@ app.get("/health", (_req, res) => {
 });
 
 app.use("/api/users", auth, usersRouter);
+app.use("/api/applications", auth, applicationsRouter);
 
 async function start() {
   await connectDb();

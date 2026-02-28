@@ -1,31 +1,20 @@
-import { getSession } from "@auth0/nextjs-auth0";
-import { redirect } from "next/navigation";
-import { SyncUser } from "@/components/SyncUser";
-import { LogoutButton } from "@/components/LogoutButton";
+import Link from "next/link";
 
-export default async function DashboardPage() {
-  const session = await getSession();
-  if (!session?.user) {
-    redirect("/");
-  }
-
+export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-[var(--background)]">
-      <header className="border-b border-neutral-200 dark:border-neutral-800 px-6 py-4 flex justify-between items-center">
-        <h1 className="text-lg font-semibold text-neutral-900 dark:text-white">
-          Recall
-        </h1>
-        <LogoutButton />
-      </header>
-      <main className="p-6">
-        <SyncUser />
-        <p className="text-neutral-600 dark:text-neutral-400">
-          Welcome, {session.user.name ?? session.user.email}.
-        </p>
-        <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-500">
-          Phase 1 complete. Job pipeline and more coming in Phase 2.
-        </p>
-      </main>
+    <div>
+      <h1 className="text-xl font-semibold text-neutral-900 dark:text-white">
+        Dashboard
+      </h1>
+      <p className="mt-2 text-neutral-600 dark:text-neutral-400">
+        Welcome back. Manage your job applications from one place.
+      </p>
+      <Link
+        href="/dashboard/applications"
+        className="mt-6 inline-flex items-center rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 dark:focus:ring-offset-neutral-900 transition-colors"
+      >
+        View applications
+      </Link>
     </div>
   );
 }
