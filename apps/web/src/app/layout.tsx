@@ -1,20 +1,19 @@
 import { QueryProvider } from "@/components/QueryProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import type { Metadata } from "next";
+import { Montserrat } from 'next/font/google';
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Recall — Track your job applications",
-  description: "Track your job applications with clarity.",
-};
-
+const font = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={font.className}>
       <body className="antialiased min-h-screen">
         <ThemeProvider>
           <QueryProvider>{children}</QueryProvider>
