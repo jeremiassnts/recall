@@ -1,9 +1,9 @@
-import { expressjwt as jwt, GetVerificationKey } from "express-jwt";
+import { GetVerificationKey, expressjwt as jwt } from "express-jwt";
 import jwksRsa from "jwks-rsa";
 
-const auth0Domain = process.env.AUTH0_ISSUER_BASE_URL;
+const auth0Domain = process.env.AUTH0_DOMAIN;
 if (!auth0Domain) {
-  throw new Error("AUTH0_ISSUER_BASE_URL is required");
+  throw new Error("AUTH0_DOMAIN is required");
 }
 
 const audience = process.env.AUTH0_AUDIENCE;

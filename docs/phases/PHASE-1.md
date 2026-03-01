@@ -37,12 +37,12 @@ Phase 1 delivers the entry experience and authentication foundation: login-first
 
 - **Stack:** Express, TypeScript, Mongoose, `express-jwt` + `jwks-rsa`, Helmet, CORS
 - **Health:** `GET /health` returns `{ status: "ok" }`
-- **Auth middleware:** JWT validation via Auth0 JWKS; `AUTH0_ISSUER_BASE_URL` and optional `AUTH0_AUDIENCE`
+- **Auth middleware:** JWT validation via Auth0 JWKS; `AUTH0_DOMAIN` and optional `AUTH0_AUDIENCE`
 - **User model (MongoDB):** `auth0Id` (unique), `name`, `email`, timestamps; index on `auth0Id`
 - **User routes (protected by JWT):**
   - `POST /api/users/sync` — upsert user by `auth0Id` (from JWT `sub`), set `name`/`email`; returns user payload
   - `GET /api/users/me` — return current user by JWT `sub`
-- **Config:** `MONGODB_URI`, `WEB_ORIGIN`, `AUTH0_ISSUER_BASE_URL`, `AUTH0_AUDIENCE` (optional)
+- **Config:** `MONGODB_URI`, `WEB_ORIGIN`, `AUTH0_DOMAIN`, `AUTH0_AUDIENCE` (optional)
 
 ### Shared
 
@@ -59,12 +59,12 @@ Phase 1 delivers the entry experience and authentication foundation: login-first
 
 ## Files Added / Touched
 
-| Area        | Path |
-|------------|------|
-| Root       | `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.gitignore` |
-| packages   | `packages/types/*`, `packages/config/*`, `packages/ui/*` |
-| apps/web   | `src/app/layout.tsx`, `page.tsx`, `globals.css`, `src/app/dashboard/page.tsx`, `src/app/api/auth/[auth0]/route.ts`, `src/app/api/sync-user/route.ts`, `src/components/LoginPanel.tsx`, `InfoPanel.tsx`, `ThemeToggle.tsx`, `ThemeProvider.tsx`, `LogoutButton.tsx`, `SyncUser.tsx`, `src/middleware.ts`, `next.config.ts`, `tailwind.config.ts`, `postcss.config.mjs`, `tsconfig.json`, `.env.example` |
-| apps/api   | `src/index.ts`, `src/db.ts`, `src/middleware/auth.ts`, `src/models/User.ts`, `src/routes/users.ts`, `src/types/express.d.ts`, `tsconfig.json`, `.env.example` |
+| Area     | Path                                                                                                                                                                                                                                                                                                                                                                                                   |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Root     | `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.gitignore`                                                                                                                                                                                                                                                                                                                                      |
+| packages | `packages/types/*`, `packages/config/*`, `packages/ui/*`                                                                                                                                                                                                                                                                                                                                               |
+| apps/web | `src/app/layout.tsx`, `page.tsx`, `globals.css`, `src/app/dashboard/page.tsx`, `src/app/api/auth/[auth0]/route.ts`, `src/app/api/sync-user/route.ts`, `src/components/LoginPanel.tsx`, `InfoPanel.tsx`, `ThemeToggle.tsx`, `ThemeProvider.tsx`, `LogoutButton.tsx`, `SyncUser.tsx`, `src/middleware.ts`, `next.config.ts`, `tailwind.config.ts`, `postcss.config.mjs`, `tsconfig.json`, `.env.example` |
+| apps/api | `src/index.ts`, `src/db.ts`, `src/middleware/auth.ts`, `src/models/User.ts`, `src/routes/users.ts`, `src/types/express.d.ts`, `tsconfig.json`, `.env.example`                                                                                                                                                                                                                                          |
 
 ---
 

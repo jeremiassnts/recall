@@ -1,15 +1,16 @@
-import { getSession } from "@auth0/nextjs-auth0";
-import { redirect } from "next/navigation";
+
 import { LogoutButton } from "@/components/LogoutButton";
 import { SyncUser } from "@/components/SyncUser";
+import { auth0 } from "@/lib/auth0";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession();
+  const session = await auth0.getSession();
   if (!session?.user) {
     redirect("/");
   }

@@ -1,11 +1,10 @@
-import { getSession } from "@auth0/nextjs-auth0";
-import { redirect } from "next/navigation";
 import { LoginPanel } from "@/components/LoginPanel";
-import { InfoPanel } from "@/components/InfoPanel";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { auth0 } from "@/lib/auth0";
+import { redirect } from "next/navigation";
 
 export default async function LoginPage() {
-  const session = await getSession();
+  const session = await auth0.getSession();
   if (session?.user) {
     redirect("/dashboard");
   }
@@ -16,7 +15,6 @@ export default async function LoginPage() {
         <ThemeToggle className="absolute top-4 right-4 md:top-6 md:right-6" />
         <LoginPanel />
       </div>
-      <InfoPanel />
     </div>
   );
 }
