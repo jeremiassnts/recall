@@ -9,7 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 export function Header() {
     const { user } = useUser();
     return (
-        <header className="flex flex-row justify-between items-center w-full max-h-screen p-10">
+        <header className="flex flex-row justify-between items-center w-full max-h-screen p-4">
             <h1 className="text-lg font-bold">Dashboard</h1>
             <div className="flex flex-row justify-center items-center gap-4">
                 <ThemeToggle />

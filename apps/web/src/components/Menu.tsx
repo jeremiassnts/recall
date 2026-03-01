@@ -23,7 +23,7 @@ const menuItems = [
 
 export function Menu() {
     return (
-        <nav className="w-[20vw] min-h-screen bg-gray-100 dark:bg-gray-800 border-r-[1px] border-gray-200 dark:border-r-gray-800 p-10 flex flex-col">
+        <nav className="w-[20vw] min-h-screen bg-gray-100 dark:bg-gray-800 border-r-[1px] border-gray-200 dark:border-r-gray-800 p-4 flex flex-col">
             <div>
                 <Image src={logoWhite} alt="Recall" width={70} height={70} />
                 <a className='text-xs text-gray-400' href="https://jeremiassnts.vercel.app/en" target='_blank'>created by Jeremias Santos</a>

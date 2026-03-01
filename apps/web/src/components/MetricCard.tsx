@@ -8,7 +8,7 @@ interface MetricCardProps {
 
 export function MetricCard({ label, value, icon }: MetricCardProps) {
     return (
-        <Card className="border-[1px] border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <Card className="border-[1px] border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-none">
             <CardHeader className="flex flex-row items-baseline justify-start gap-2">
                 <div className="w-6 h-6 rounded-full bg-gray-400 dark:bg-gray-700 flex items-center justify-center">
                     {icon}
