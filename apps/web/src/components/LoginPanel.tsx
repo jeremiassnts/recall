@@ -14,7 +14,7 @@ export function LoginPanel() {
           Track your job applications with clarity. Let's get started!
         </p>
         <a
-          href="/auth/login?returnTo=/dashboard&connection=google-oauth2&prompt=login"
+          href="/auth/login?connection=google-oauth2&prompt=login"
           className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-bold text-white hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 dark:focus:ring-offset-neutral-900 transition-colors"
         >
           <GoogleIcon className="w-4 h-4" /> Login with Google

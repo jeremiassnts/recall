@@ -1,21 +1,8 @@
-import { GetVerificationKey, expressjwt as jwt } from "express-jwt";
-import jwksRsa from "jwks-rsa";
+import { auth as expressAuth } from 'express-oauth2-jwt-bearer';
 
-const auth0Domain = process.env.AUTH0_DOMAIN;
-if (!auth0Domain) {
-  throw new Error("AUTH0_DOMAIN is required");
-}
-
-const audience = process.env.AUTH0_AUDIENCE;
-
-export const auth = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksUri: `${auth0Domain.replace(/\/$/, "")}/.well-known/jwks.json`,
-  }) as GetVerificationKey,
-  audience: audience || undefined,
-  issuer: `${auth0Domain.replace(/\/$/, "")}/`,
-  algorithms: ["RS256"],
-  credentialsRequired: true,
+// Authorization middleware. When used, the Access Token must
+// exist and be verified against the Auth0 JSON Web Key Set.
+export const auth = expressAuth({
+  audience: process.env.AUTH0_AUDIENCE,
+  issuerBaseURL: `https://${process.env.AUTH0_DOMAIN?.replace(/\/$/, "")}/`,
 });

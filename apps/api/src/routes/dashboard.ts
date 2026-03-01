@@ -1,14 +1,14 @@
+import type { JobStage } from "@recall/types";
 import { Router } from "express";
 import mongoose from "mongoose";
 import { getCurrentUserId } from "../helpers/getCurrentUserId.js";
 import { JobApplicationModel } from "../models/JobApplication.js";
-import type { JobStage } from "@recall/types";
 
 export const dashboardRouter = Router();
 
 /** GET /api/dashboard — pipeline metrics via MongoDB aggregation. */
 dashboardRouter.get("/", async (req, res) => {
-  const userId = await getCurrentUserId(req.auth?.sub, res);
+  const userId = await getCurrentUserId(req.auth?.payload?.sub, res);
   if (!userId) return;
 
   const userObjectId = new mongoose.Types.ObjectId(userId);

@@ -1,6 +1,6 @@
 import { JOB_STAGES, type JobStage } from "@recall/types";
-import mongoose from "mongoose";
 import { Router } from "express";
+import mongoose from "mongoose";
 import { z } from "zod";
 import { getCurrentUserId } from "../helpers/getCurrentUserId.js";
 import { JobApplicationModel } from "../models/JobApplication.js";
@@ -78,7 +78,7 @@ export const applicationsRouter = Router();
 
 /** List applications for current user. Query: stage (optional). */
 applicationsRouter.get("/", async (req, res) => {
-  const userId = await getCurrentUserId(req.auth?.sub, res);
+  const userId = await getCurrentUserId(req.auth?.payload?.sub, res);
   if (!userId) return;
 
   const stage = typeof req.query.stage === "string" ? req.query.stage : undefined;
@@ -105,7 +105,7 @@ const reorderBodySchema = z.object({
 
 /** Reorder applications within a stage. Sets stage and order for each id by index. */
 applicationsRouter.patch("/reorder", async (req, res) => {
-  const userId = await getCurrentUserId(req.auth?.sub, res);
+  const userId = await getCurrentUserId(req.auth?.payload?.sub, res);
   if (!userId) return;
 
   const parsed = reorderBodySchema.safeParse(req.body);
@@ -138,7 +138,7 @@ applicationsRouter.patch("/reorder", async (req, res) => {
 
 /** Get one application by id. */
 applicationsRouter.get("/:id", async (req, res) => {
-  const userId = await getCurrentUserId(req.auth?.sub, res);
+  const userId = await getCurrentUserId(req.auth?.payload?.sub, res);
   if (!userId) return;
 
   const { id } = req.params;
@@ -159,7 +159,7 @@ applicationsRouter.get("/:id", async (req, res) => {
 
 /** Create application. */
 applicationsRouter.post("/", async (req, res) => {
-  const userId = await getCurrentUserId(req.auth?.sub, res);
+  const userId = await getCurrentUserId(req.auth?.payload?.sub, res);
   if (!userId) return;
 
   const parsed = createBodySchema.safeParse(req.body);
@@ -199,7 +199,7 @@ applicationsRouter.post("/", async (req, res) => {
 
 /** Update application. */
 applicationsRouter.patch("/:id", async (req, res) => {
-  const userId = await getCurrentUserId(req.auth?.sub, res);
+  const userId = await getCurrentUserId(req.auth?.payload?.sub, res);
   if (!userId) return;
 
   const { id } = req.params;
@@ -241,7 +241,7 @@ applicationsRouter.patch("/:id", async (req, res) => {
 
 /** Delete application. */
 applicationsRouter.delete("/:id", async (req, res) => {
-  const userId = await getCurrentUserId(req.auth?.sub, res);
+  const userId = await getCurrentUserId(req.auth?.payload?.sub, res);
   if (!userId) return;
 
   const { id } = req.params;

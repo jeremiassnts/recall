@@ -6,7 +6,7 @@ export const usersRouter = Router();
 /** Sync or create user from JWT (Auth0). Called after login. */
 usersRouter.post("/sync", async (req, res) => {
   try {
-    const sub = req.auth?.sub;
+    const sub = req.auth?.payload?.sub;
     if (!sub) {
       return res.status(401).json({ error: "Unauthorized" });
     }
@@ -36,7 +36,7 @@ usersRouter.post("/sync", async (req, res) => {
 /** Get current user. */
 usersRouter.get("/me", async (req, res) => {
   try {
-    const sub = req.auth?.sub;
+    const sub = req.auth?.payload?.sub;
     if (!sub) {
       return res.status(401).json({ error: "Unauthorized" });
     }

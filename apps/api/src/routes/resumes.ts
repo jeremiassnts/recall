@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
 import { Router } from "express";
+import mongoose from "mongoose";
 import multer from "multer";
 import { getCurrentUserId } from "../helpers/getCurrentUserId.js";
+import { deleteFromR2, getPresignedDownloadUrl, isR2Configured, uploadToR2 } from "../lib/r2.js";
 import { ResumeModel } from "../models/Resume.js";
-import { uploadToR2, getPresignedDownloadUrl, deleteFromR2, isR2Configured } from "../lib/r2.js";
 
 const PDF_MAGIC = Buffer.from([0x25, 0x50, 0x44, 0x46]); // %PDF
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -21,7 +21,7 @@ export const resumesRouter = Router();
 
 /** Upload a resume (PDF). Returns created resume metadata. */
 resumesRouter.post("/", upload.single("file"), async (req, res) => {
-  const userId = await getCurrentUserId(req.auth?.sub, res);
+  const userId = await getCurrentUserId(req.auth?.payload?.sub, res);
   if (!userId) return;
 
   if (!isR2Configured()) {
@@ -66,7 +66,7 @@ resumesRouter.post("/", upload.single("file"), async (req, res) => {
 
 /** List current user's resumes. */
 resumesRouter.get("/", async (req, res) => {
-  const userId = await getCurrentUserId(req.auth?.sub, res);
+  const userId = await getCurrentUserId(req.auth?.payload?.sub, res);
   if (!userId) return;
 
   try {
@@ -89,7 +89,7 @@ resumesRouter.get("/", async (req, res) => {
 
 /** Get a presigned URL to download the resume. */
 resumesRouter.get("/:id/url", async (req, res) => {
-  const userId = await getCurrentUserId(req.auth?.sub, res);
+  const userId = await getCurrentUserId(req.auth?.payload?.sub, res);
   if (!userId) return;
 
   const { id } = req.params;
@@ -116,7 +116,7 @@ resumesRouter.get("/:id/url", async (req, res) => {
 
 /** Delete a resume (from DB and R2). */
 resumesRouter.delete("/:id", async (req, res) => {
-  const userId = await getCurrentUserId(req.auth?.sub, res);
+  const userId = await getCurrentUserId(req.auth?.payload?.sub, res);
   if (!userId) return;
 
   const { id } = req.params;

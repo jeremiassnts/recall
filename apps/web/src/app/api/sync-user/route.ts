@@ -1,23 +1,10 @@
-import { getAccessToken } from "@auth0/nextjs-auth0";
+import { fetchApi } from "@/lib/api";
 import { NextResponse } from "next/server";
-
-const API_URL = process.env.API_URL ?? "http://localhost:4000";
 
 export async function POST() {
   try {
-    const { accessToken } = await getAccessToken();
-    if (!accessToken) {
-      return NextResponse.json(
-        { error: "Not authenticated" },
-        { status: 401 }
-      );
-    }
-    const res = await fetch(`${API_URL}/api/users/sync`, {
+    const res = await fetchApi("/api/users/sync", {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
     });
     if (!res.ok) {
       const text = await res.text();
