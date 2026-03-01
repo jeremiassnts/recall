@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UserModel } from "../models/User.js";
+import { Auth0Service } from "../services/auth0.js";
 
 export const usersRouter = Router();
 
@@ -10,12 +11,14 @@ usersRouter.post("/sync", async (req, res) => {
     if (!sub) {
       return res.status(401).json({ error: "Unauthorized" });
     }
-    const name = (req.auth?.["https://recall.app/name"] as string) ?? req.auth?.name ?? "";
-    const email = (req.auth?.["https://recall.app/email"] as string) ?? req.auth?.email ?? "";
-
+    const auth0Service = new Auth0Service();
+    const userInfo = await auth0Service.getUserInfo(req.auth?.token ?? '');
+    const name = userInfo.name;
+    const email = userInfo.email;
+    const picture = userInfo.picture;
     const user = await UserModel.findOneAndUpdate(
       { auth0Id: sub },
-      { $set: { name, email, updatedAt: new Date() } },
+      { $set: { name, email, updatedAt: new Date(), picture } },
       { new: true, upsert: true }
     );
 
