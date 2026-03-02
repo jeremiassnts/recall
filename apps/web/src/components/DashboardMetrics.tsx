@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { CircleCheck, CircleDollarSign, CircleOff, Send } from "lucide-react";
 
 export function DashboardMetrics() {
-    const { data: metrics, isLoading, error } = useListDashboardMetrics();
+    const { data: metrics, isLoading } = useListDashboardMetrics();
 
     return (
         <>
