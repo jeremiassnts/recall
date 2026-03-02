@@ -14,6 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={font.className}>
+      <head>
+        <title>Recall</title>
+      </head>
       <body className="antialiased min-h-screen">
         <ThemeProvider>
           <QueryProvider>{children}</QueryProvider>

@@ -1,16 +1,25 @@
 "use client";
 import { useUser } from "@auth0/nextjs-auth0";
 import { LogOutIcon } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
+const headerTitles = {
+    "/dashboard": "Dashboard",
+    "/dashboard/applications": "Applications",
+    "/dashboard/calendar": "Calendar"
+}
+
 export function Header() {
     const { user } = useUser();
+    const pathname = usePathname();
+
     return (
         <header className="flex flex-row justify-between items-center w-full max-h-screen p-4">
-            <h1 className="text-lg font-bold">Dashboard</h1>
+            <h1 className="text-lg font-bold">{headerTitles[pathname as keyof typeof headerTitles]}</h1>
             <div className="flex flex-row justify-center items-center gap-4">
                 <ThemeToggle />
                 <DropdownMenu>
