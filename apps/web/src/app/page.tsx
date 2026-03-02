@@ -10,7 +10,7 @@ export default async function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen grid grid-cols-2">
+    <main className="min-h-screen grid grid-cols-2 w-full">
       <LoginImage />
       <LoginPanel />
     </main>
