@@ -1,12 +1,12 @@
 "use client";
 
-import type { JobApplication, JobApplicationCreate, JobStage } from "@recall/types";
-import { useMutation } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import type { JobApplication, JobApplicationCreate, JobStage } from "@recall/types";
 import { JOB_STAGES } from "@recall/types";
-import { useState, useRef } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const formSchema = z.object({
   companyName: z.string().min(1, "Company name is required"),
@@ -65,25 +65,25 @@ export function ApplicationForm({
     resolver: zodResolver(formSchema),
     defaultValues: application
       ? {
-          companyName: application.companyName,
-          jobTitle: application.jobTitle,
-          jobUrl: application.jobUrl ?? "",
-          description: application.description ?? "",
-          stage: application.stage,
-          status: application.status ?? "",
-          appliedDate: application.appliedDate ?? "",
-          notes: application.notes ?? "",
-        }
+        companyName: application.companyName,
+        jobTitle: application.jobTitle,
+        jobUrl: application.jobUrl ?? "",
+        description: application.description ?? "",
+        stage: application.stage,
+        status: application.status ?? "",
+        appliedDate: application.appliedDate ?? "",
+        notes: application.notes ?? "",
+      }
       : {
-          companyName: "",
-          jobTitle: "",
-          jobUrl: "",
-          description: "",
-          stage: "Wishlist",
-          status: "",
-          appliedDate: "",
-          notes: "",
-        },
+        companyName: "",
+        jobTitle: "",
+        jobUrl: "",
+        description: "",
+        stage: "Wishlist",
+        status: "",
+        appliedDate: "",
+        notes: "",
+      },
   });
 
   const createMutation = useMutation({
@@ -379,7 +379,7 @@ export function ApplicationForm({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-accent-hover disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 dark:focus:ring-offset-neutral-900 transition-colors"
+                className="rounded-lg bg-indigo-500 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-600 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 dark:focus:ring-offset-neutral-900 transition-colors"
               >
                 {isSubmitting ? "Saving…" : isEdit ? "Save changes" : "Add application"}
               </button>
